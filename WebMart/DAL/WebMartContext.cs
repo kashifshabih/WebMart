@@ -11,6 +11,7 @@ namespace WebMart.DAL
             : base("WebMartContext")
         {
         }
+
         
         public DbSet<Student> Students { get; set; }
 

@@ -12,6 +12,7 @@ namespace WebMart.DAL
     {
         protected override void Seed(WebMartContext context)
         {
+
             var students = new List<Student>
             {
                 new Student{FirstMidName="Carson",LastName="Alexander",EnrollmentDate=DateTime.Parse("2005-09-01")},
