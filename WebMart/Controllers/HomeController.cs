@@ -26,5 +26,10 @@ namespace WebMart.Controllers
 
             return View();
         }
+
+        public ViewResult ConsumerWebService()
+        {
+            return View();
+        }
     }
 }

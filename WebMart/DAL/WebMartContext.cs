@@ -14,6 +14,7 @@ namespace WebMart.DAL
 
         
         public DbSet<Student> Students { get; set; }
+        public DbSet<TestOrder> TestOrders { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

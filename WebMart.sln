@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebMart", "WebMart\WebMart.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebMart.Tests", "WebMart.Tests\WebMart.Tests.csproj", "{B51AFF8C-7896-42F3-BB13-3488F3BDE86F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreditCardService", "CreditCardService\CreditCardService.csproj", "{9B5B6B8C-6197-484E-8FA6-ABD25D55152C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{B51AFF8C-7896-42F3-BB13-3488F3BDE86F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B51AFF8C-7896-42F3-BB13-3488F3BDE86F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B51AFF8C-7896-42F3-BB13-3488F3BDE86F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B5B6B8C-6197-484E-8FA6-ABD25D55152C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B5B6B8C-6197-484E-8FA6-ABD25D55152C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B5B6B8C-6197-484E-8FA6-ABD25D55152C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B5B6B8C-6197-484E-8FA6-ABD25D55152C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
