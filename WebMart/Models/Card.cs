@@ -7,7 +7,7 @@ using System.Text;
 
 namespace WebMart.Models
 {
-    public class CreditCard
+    public class Card
     {
         public int ID { get; set; }
         [Required]
