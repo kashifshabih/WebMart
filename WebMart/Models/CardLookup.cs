@@ -18,5 +18,11 @@ namespace WebMart.Models
         public int SecurityCode { get; set; }
         [Required]
         public DateTime ValidTill_DateTime { get; set; }
+
+        public bool IsValidCard(CreditCard card)
+        {
+            return (this.Name==card.Name && this.CreditCardNumber==card.CreditCardNumber 
+                && this.SecurityCode==card.SecurityCode && this.ValidTill_DateTime==card.ValidTill_DateTime);
+        }
     }
 }
