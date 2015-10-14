@@ -1,0 +1,106 @@
+﻿@model WebMart.DAL.Vendor
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Vendor</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CardCompany)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CardCompany)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CardType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CardType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CardNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CardNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SecurityCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SecurityCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ExpireDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ExpireDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastUpdate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastUpdate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AspNetUser.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AspNetUser.Email)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.VendorId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
