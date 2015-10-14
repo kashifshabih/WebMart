@@ -1,37 +1,60 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "ConsumerWebService";
 }
 
 <h2>ConsumerWebService</h2>
 
-
 <table>
-
     <tr>
         <td>Credit Card Number</td>
         <td>@Html.TextBox("CreditCardNumber")</td>
     </tr>
-
     <tr>
         <td>Credit Card Pin</td>
         <td>@Html.TextBox("CreditCardPin")</td>
     </tr>
-
     <tr>
-
         <td colspan="2"><button onclick="PostCreditCard();return false;"/></td>
-
     </tr>
-
 </table>
 
-
 <script type="text/javascript">
-    function PostCreditCard() {
-        alert("kashif");
-        var CreditCard = { CreditCardNumber: $('#CreditCardNumber').val(), CreditCardPin: $('#CreditCardPin').val() };
+    function toBin(str) {
+        var st, i, j, d;
+        var arr = [];
+        var len = str.length;
+        for (i = 1; i <= len; i++) {
+            //reverse so its like a stack
+            d = str.charCodeAt(len - i);
+            for (j = 0; j < 8; j++) {
+                arr.push(d % 2);
+                d = Math.floor(d / 2);
+            }
+        }
+        //reverse all bits again.
+        return arr.reverse().join("");
+    }
+
+    function Encrypt(plaintext) {
+        var key = '@System.Configuration.ConfigurationManager.AppSettings["sequence"]';
+        var xor = "";        
+        key = toBin(key);        
+        plaintext = toBin(plaintext);                        
+        for (var i = 0; i < plaintext.length ; ++i) {
+            xor += plaintext.charCodeAt(i) ^ key.charCodeAt(i % key.length);
+        }                
+        return xor;
+    }
+
+    function PostCreditCard() {                
+        var CreditCard = {
+            CreditCardNumber: Encrypt($('#CreditCardNumber').val()),
+            CreditCardPin: Encrypt($('#CreditCardPin').val())
+        };
+        /*alert($('#CreditCardNumber').val() + ' => ' + Encrypt($('#CreditCardNumber').val()) + ' Length:' + Encrypt($('#CreditCardNumber').val()).length);
+        alert($('#CreditCardPin').val() + ' => ' + Encrypt($('#CreditCardPin').val()) + ' Length:' + Encrypt($('#CreditCardPin').val()).length);*/
         var TestOrder = { CreditCardNumber: $('#CreditCardNumber').val(), CreditCardPin: $('#CreditCardPin').val() };
+        var transaction = { CreditCardNumber: $('#CreditCardNumber').val(), CreditCardPin: $('#CreditCardPin').val() };
         $.ajax({
             type: "POST",
             data: JSON.stringify(CreditCard),
@@ -49,7 +72,7 @@
                     //url: '<%= Url.Action("Create", "TestOrder") %>',
                     url: "/TestOrder/Create",
                     success: function (data) {
-                        // your data could be a View or Json or what ever you returned in your action method 
+                        // your data could be a View or Json or what ever you returned in your action method
                         // parse your data here
                         alert("success saving test order");
                     },
@@ -57,37 +80,27 @@
                         alert("error");
                     }
                 });
+
+
+                $.ajax({
+                    type: "POST",
+                    data: JSON.stringify(transaction),
+                    url: "http://localhost:3298/api/Transactions",
+                    contentType: "application/json",
+                    success: function (data) {
+                        // your data could be a View or Json or what ever you returned in your action method
+                        // parse your data here
+                        alert("success saving test order 2");
+                    },
+                    error: function () {
+                        alert("error");
+                    }
+                });
+
             },
             error: function () {
                         alert("error");
                     }
         });
-    }
-
-        //jQuery.support.cors = true;
-        //var employee = {
-        //    ID: $('#txtaddEmpid').val(),
-        //    EmpName: $('#txtaddEmpName').val(),
-        //    EmpDepartment: $('#txtaddEmpDep').val(),
-        //    EmpMobile: $('#txtaddEmpMob').val()
-        //};
-
-        //$.ajax({
-        //    url: 'http://localhost:8080/API_SVC/api/EmployeeAPI',
-        //    type: 'POST',
-        //    data: JSON.stringify(employee),
-        //    contentType: "application/json;charset=utf-8",
-        //    success: function (data) {
-        //        WriteResponse(data);
-        //    },
-        //    error: function (x, y, z) {
-        //        alert(x + '\n' + y + '\n' + z);
-        //    }
-        //});
-    
+    }        
 </script>
-
-
-
-
-
