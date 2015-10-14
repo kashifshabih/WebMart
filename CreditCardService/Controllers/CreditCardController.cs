@@ -10,6 +10,10 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using CreditCardService.Models;
+using System.Security.Cryptography;
+using System.Text;
+using System.Diagnostics;
+using System.IO;
 
 namespace CreditCardService.Controllers
 {
@@ -78,10 +82,10 @@ namespace CreditCardService.Controllers
             //if (!ModelState.IsValid)
             //{
                 //return BadRequest(ModelState);
-            //}
+            //}                                 
 
-            bool IsValid =  db.CreditCards.Count(e => e.CreditCardNumber == creditCard.CreditCardNumber && e.CreditCardPin == creditCard.CreditCardPin) > 0;
-
+            bool IsValid = db.CreditCards.Count(e => GetCrypt(e.CreditCardNumber) == creditCard.CreditCardNumber && GetCrypt(e.CreditCardPin) == creditCard.CreditCardPin) > 0;
+            
             if (IsValid)
             {
                 //Update database
@@ -124,12 +128,22 @@ namespace CreditCardService.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-        
+        }        
         
         private bool CreditCardExists(int id)
         {
             return db.CreditCards.Count(e => e.Id == id) > 0;
+        }
+
+        public static string GetCrypt(string text)
+        {
+            return text;
+            /*string hash = "";
+            MD5 alg = MD5.Create();
+            byte[] toEncryptArray = UTF8Encoding.UTF8.GetBytes(text);            
+            byte[] result = alg.ComputeHash(toEncryptArray); 
+            hash = Encoding.UTF8.GetString(result);            
+            return hash;*/
         }
     }
 }

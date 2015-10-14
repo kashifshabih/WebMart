@@ -15,8 +15,7 @@ namespace CreditCardService.Migrations
 
         protected override void Seed(CreditCardService.Models.CreditCardServiceContext context)
         {
-            //  This method will be called after migrating to the latest version.
-
+            // This method will be called after migrating to the latest version.
             context.CreditCards.AddOrUpdate(x => x.Id,
                 new CreditCard() { Id = 1, CreditCardNumber = "7674738297620987", CreditCardPin = "123"},
                 new CreditCard() { Id = 2, CreditCardNumber = "1234567890123456", CreditCardPin = "456" },

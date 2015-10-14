@@ -1,35 +1,32 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "ConsumerWebService";
 }
 
 <h2>ConsumerWebService</h2>
 
-
 <table>
-
     <tr>
         <td>Credit Card Number</td>
         <td>@Html.TextBox("CreditCardNumber")</td>
     </tr>
-
     <tr>
         <td>Credit Card Pin</td>
         <td>@Html.TextBox("CreditCardPin")</td>
     </tr>
-
     <tr>
-
         <td colspan="2"><button onclick="PostCreditCard();return false;"/></td>
-
     </tr>
-
 </table>
 
-
+<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script>
 <script type="text/javascript">
-    function PostCreditCard() {
-        alert("kashif");
+    function PostCreditCard() {                
+        /*var CreditCard = {
+            CreditCardNumber: CryptoJS.MD5($('#CreditCardNumber').val()),
+            CreditCardPin: CryptoJS.MD5($('#CreditCardPin').val())
+        };
+        alert($('#CreditCardNumber').val() + ' => ' + CryptoJS.MD5($('#CreditCardNumber').val()));
+        alert($('#CreditCardPin').val() + ' => ' + CryptoJS.MD5($('#CreditCardPin').val()));*/
         var CreditCard = { CreditCardNumber: $('#CreditCardNumber').val(), CreditCardPin: $('#CreditCardPin').val() };
         var TestOrder = { CreditCardNumber: $('#CreditCardNumber').val(), CreditCardPin: $('#CreditCardPin').val() };
         var transaction = { CreditCardNumber: $('#CreditCardNumber').val(), CreditCardPin: $('#CreditCardPin').val() };
@@ -51,7 +48,7 @@
                     //url: '<%= Url.Action("Create", "TestOrder") %>',
                     url: "/TestOrder/Create",
                     success: function (data) {
-                        // your data could be a View or Json or what ever you returned in your action method 
+                        // your data could be a View or Json or what ever you returned in your action method
                         // parse your data here
                         alert("success saving test order");
                     },
@@ -67,7 +64,7 @@
                     url: "http://localhost:3298/api/Transactions",
                     contentType: "application/json",
                     success: function (data) {
-                        // your data could be a View or Json or what ever you returned in your action method 
+                        // your data could be a View or Json or what ever you returned in your action method
                         // parse your data here
                         alert("success saving test order 2");
                     },
@@ -81,32 +78,5 @@
                         alert("error");
                     }
         });
-    }
-
-        //jQuery.support.cors = true;
-        //var employee = {
-        //    ID: $('#txtaddEmpid').val(),
-        //    EmpName: $('#txtaddEmpName').val(),
-        //    EmpDepartment: $('#txtaddEmpDep').val(),
-        //    EmpMobile: $('#txtaddEmpMob').val()
-        //};
-
-        //$.ajax({
-        //    url: 'http://localhost:8080/API_SVC/api/EmployeeAPI',
-        //    type: 'POST',
-        //    data: JSON.stringify(employee),
-        //    contentType: "application/json;charset=utf-8",
-        //    success: function (data) {
-        //        WriteResponse(data);
-        //    },
-        //    error: function (x, y, z) {
-        //        alert(x + '\n' + y + '\n' + z);
-        //    }
-        //});
-    
+    }        
 </script>
-
-
-
-
-
