@@ -18,20 +18,44 @@
     </tr>
 </table>
 
-<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script>
 <script type="text/javascript">
+    function toBin(str) {
+        var st, i, j, d;
+        var arr = [];
+        var len = str.length;
+        for (i = 1; i <= len; i++) {
+            //reverse so its like a stack
+            d = str.charCodeAt(len - i);
+            for (j = 0; j < 8; j++) {
+                arr.push(d % 2);
+                d = Math.floor(d / 2);
+            }
+        }
+        //reverse all bits again.
+        return arr.reverse().join("");
+    }
+
+    function Encrypt(plaintext) {
+        var key = '@System.Configuration.ConfigurationManager.AppSettings["sequence"]';
+        var xor = "";        
+        key = toBin(key);        
+        plaintext = toBin(plaintext);                        
+        for (var i = 0; i < plaintext.length ; ++i) {
+            xor += plaintext.charCodeAt(i) ^ key.charCodeAt(i % key.length);
+        }                
+        return xor;
+    }
+
     function PostCreditCard() {                
-        /*var CreditCard = {
-            CreditCardNumber: CryptoJS.MD5($('#CreditCardNumber').val()),
-            CreditCardPin: CryptoJS.MD5($('#CreditCardPin').val())
+        var CreditCard = {
+            CreditCardNumber: Encrypt($('#CreditCardNumber').val()),
+            CreditCardPin: Encrypt($('#CreditCardPin').val())
         };
-        alert($('#CreditCardNumber').val() + ' => ' + CryptoJS.MD5($('#CreditCardNumber').val()));
-        alert($('#CreditCardPin').val() + ' => ' + CryptoJS.MD5($('#CreditCardPin').val()));*/
-        var CreditCard = { CreditCardNumber: $('#CreditCardNumber').val(), CreditCardPin: $('#CreditCardPin').val() };
+        /*alert($('#CreditCardNumber').val() + ' => ' + Encrypt($('#CreditCardNumber').val()) + ' Length:' + Encrypt($('#CreditCardNumber').val()).length);
+        alert($('#CreditCardPin').val() + ' => ' + Encrypt($('#CreditCardPin').val()) + ' Length:' + Encrypt($('#CreditCardPin').val()).length);*/
         var TestOrder = { CreditCardNumber: $('#CreditCardNumber').val(), CreditCardPin: $('#CreditCardPin').val() };
         var transaction = { CreditCardNumber: $('#CreditCardNumber').val(), CreditCardPin: $('#CreditCardPin').val() };
         $.ajax({
-
             type: "POST",
             data: JSON.stringify(CreditCard),
             url: "http://localhost:3265/api/CreditCard",
