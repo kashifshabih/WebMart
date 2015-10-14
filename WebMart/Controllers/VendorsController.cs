@@ -18,10 +18,116 @@ namespace WebMart.Controllers
         // GET: Vendors
         public ActionResult Index()
         {
-            var vendors = db.Vendors.Include(v => v.AspNetUser);
-            return View(vendors.ToList());
+            //var vendors = db.Vendors.Include(v => v.AspNetUser);
+            //return View(vendors.ToList());
+            var vendors = db.Vendors.Where(x => x.IsApproved == false).ToList();
+            return View(vendors);
         }
 
+        public ActionResult AllVendor(string status)
+        {
+            ViewBag.Status = (status == null ? "P" : status);
+            if (status == null)
+            {
+                var vendors = db.Vendors.Where(x => x.IsApproved == false).ToList();
+                return View(vendors);
+            }
+            else
+            {
+                return View();
+            }
+            
+            //return View(); 
+        }
+        public ActionResult Approve(string AspId)
+        {
+            try
+            {
+                var myVendor = db.Vendors.Where(x => x.AspId == AspId).FirstOrDefault();
+                var myUser = db.AspNetUsers.Where(x => x.Id == AspId).FirstOrDefault();
+                myVendor.IsApproved = true;
+                myUser.EmailConfirmed = true;
+
+                db.Entry(myVendor).State = EntityState.Modified;
+                db.Entry(myUser).State = EntityState.Modified;
+
+                db.SaveChanges();
+
+                TempData["Msg"] = "Approved Sucessfully";
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                TempData["Msg"] = "Approve Failed: " + ex.Message;
+                return RedirectToAction("Index");
+            }
+
+        }
+
+        public ActionResult Reject(string AspId)
+        {
+            try
+            {
+                var myVendor = db.Vendors.Where(x => x.AspId == AspId).FirstOrDefault();
+                var myUser = db.AspNetUsers.Where(x => x.Id == AspId).FirstOrDefault();
+                myVendor.IsApproved = false;
+                myUser.EmailConfirmed = false;
+
+                db.Entry(myVendor).State = EntityState.Modified;
+                db.Entry(myUser).State = EntityState.Modified;
+
+                db.SaveChanges();
+
+                TempData["Msg"] = "Rejected Sucessfully";
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                TempData["Msg"] = "Reject Failed: " + ex.Message;
+                return RedirectToAction("Index");
+            }
+
+        }
+
+        [HttpPost]
+        public void ApproveOrRejectAll(List<String> Ids, String status)
+        {
+            try
+            {
+                //objBs.ApproveOrReject(Ids, status);
+                ApproveOrRejectAllVendor(Ids, status);
+                TempData["Msg"] = "Operation Sucessful";
+            }
+            catch (Exception ex)
+            {
+                TempData["Msg"] = "Operation Failed: " + ex.Message;
+            }
+        }
+
+        private void ApproveOrRejectAllVendor(List<string> Ids, string status)
+        {
+            try
+            {
+                foreach (var item in Ids)
+                {
+                    var myVendor = db.Vendors.Where(x => x.AspId == item).FirstOrDefault();
+                    var myUser = db.AspNetUsers.Where(x => x.Id == item).FirstOrDefault();
+                    myVendor.IsApproved = false;
+                    myUser.EmailConfirmed = false;
+
+                    db.Entry(myVendor).State = EntityState.Modified;
+                    db.Entry(myUser).State = EntityState.Modified;
+
+                    db.SaveChanges();
+                    
+                }
+            }
+            catch (Exception)
+            {
+                
+                
+            }
+        }
         // GET: Vendors/Details/5
         public ActionResult Details(int? id)
         {

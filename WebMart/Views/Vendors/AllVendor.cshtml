@@ -1,0 +1,123 @@
+﻿@model IEnumerable<WebMart.DAL.Vendor>
+
+@{
+    ViewBag.Title = "AllVendor";
+}
+
+<h2>AllVendor</h2>
+
+@if (TempData["Msg"] != null)
+{
+    <div class="alert alert-dismissible alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        TempData["Msg"].ToString();
+    </div>
+}
+<div id="loading" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Loading....</h4>
+            </div>
+            <div class="modal-body">
+                <div class="progress progress-striped active">
+                    <div class="progress-bar" style="width: 100%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class="table">
+    <tr>
+        <th>@Html.CheckBox("selectall")</th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CardCompany)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CardType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CardNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SecurityCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ExpireDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastUpdate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsApproved)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AspNetUser.Email)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.CheckBox(item.AspId, false, new { @class = "ckb", Id = item.AspId })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Phone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CardCompany)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CardType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CardNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SecurityCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ExpireDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedBy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastUpdate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsApproved)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AspNetUser.Email)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.VendorId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.VendorId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.VendorId })
+        </td>
+    </tr>
+}
+
+</table>

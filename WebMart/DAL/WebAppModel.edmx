@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AdminUser">
           <Key>
             <PropertyRef Name="AdminId" />
@@ -95,6 +95,7 @@
           <Property Name="CardNumber" Type="varchar" MaxLength="20" />
           <Property Name="SecurityCode" Type="varchar" MaxLength="5" />
           <Property Name="ExpireDate" Type="date" />
+          <Property Name="IsApproved" Type="bit" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
           <Property Name="LastUpdate" Type="datetime" StoreGeneratedPattern="Computed" Nullable="false" />
           <Property Name="AspId" Type="nvarchar" MaxLength="128" />
@@ -258,8 +259,7 @@
             <End Role="VendorUser" EntitySet="VendorUser" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -361,6 +361,7 @@
           <Property Name="AspId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Vendor_AspNetUsers" FromRole="Vendor" ToRole="AspNetUsers" />
           <NavigationProperty Name="VendorUsers" Relationship="Self.FK_VendorUser_Vendor" FromRole="Vendor" ToRole="VendorUser" />
+          <Property Name="IsApproved" Type="Boolean" />
         </EntityType>
         <EntityType Name="VendorUser">
           <Key>
@@ -575,6 +576,7 @@
           <EntitySetMapping Name="Vendors">
             <EntityTypeMapping TypeName="Model.Vendor">
               <MappingFragment StoreEntitySet="Vendor">
+                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
                 <ScalarProperty Name="VendorId" ColumnName="VendorId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Address" ColumnName="Address" />

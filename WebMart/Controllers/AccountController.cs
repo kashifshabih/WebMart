@@ -60,8 +60,15 @@ namespace WebMart.Controllers
                 var user = await UserManager.FindAsync(model.Email, model.Password);
                 if (user != null)
                 {
-                    await SignInAsync(user, model.RememberMe);
-                    return RedirectToLocal(returnUrl);
+                    if (user.EmailConfirmed == false)
+                    {
+                        ModelState.AddModelError("", "UserId is not Activated");
+                    }
+                    else
+                    {
+                        await SignInAsync(user, model.RememberMe);
+                        return RedirectToLocal(returnUrl);
+                    }
                 }
                 else
                 {
@@ -86,7 +93,7 @@ namespace WebMart.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model, string optionsRadios)
         {
             if (ModelState.IsValid)
             {
@@ -94,7 +101,9 @@ namespace WebMart.Controllers
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInAsync(user, isPersistent: false);
+                    //Login After Registration
+                    if (optionsRadios == "EndUser")
+                        await SignInAsync(user, isPersistent: false);
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link

@@ -31,6 +31,7 @@ namespace WebMart.DAL
         public string CreatedBy { get; set; }
         public System.DateTime LastUpdate { get; set; }
         public string AspId { get; set; }
+        public Nullable<bool> IsApproved { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual ICollection<VendorUser> VendorUsers { get; set; }
